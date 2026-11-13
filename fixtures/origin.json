@@ -35,8 +35,34 @@
   },
   "routes": {
     "/feed": {
-      "body": "operator,trip,service_day,departure,zone,calendar_version\r\nborder-west,N12,2026-10-31,26:30,Europe/Berlin,winter-2\r\nborder-west,N13,2026-10-25,02:30,Europe/Berlin,winter-1\r\neast,E8,2026-11-01,00:10,Asia/Shanghai,autumn\r\n",
-      "content_type": "text/csv; charset=utf-8",
+      "json": {
+        "items": [
+          {
+            "operator": "border-west",
+            "trip": "N12",
+            "service_day": "2026-10-31",
+            "departure": "26:30",
+            "zone": "Europe/Berlin",
+            "calendar_version": "winter-2"
+          },
+          {
+            "operator": "border-west",
+            "trip": "N13",
+            "service_day": "2026-10-25",
+            "departure": "02:30",
+            "zone": "Europe/Berlin",
+            "calendar_version": "winter-1"
+          },
+          {
+            "operator": "east",
+            "trip": "E8",
+            "service_day": "2026-11-01",
+            "departure": "00:10",
+            "zone": "Asia/Shanghai",
+            "calendar_version": "autumn"
+          }
+        ]
+      },
       "headers": {
         "ETag": "feed-1"
       }

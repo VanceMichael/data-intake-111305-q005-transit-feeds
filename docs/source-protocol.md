@@ -2,7 +2,7 @@
 
 ## 记录与身份
 
-默认来源入口为 `/feed`，媒体格式为 `csv`。来源身份字段是 `operator`、`trip`、`service_day`。这些字段表示来源自身声明，不等同于已经解决的业务实体身份。输入顺序是一次接收的观察顺序，并不保证业务修订有序。
+默认来源入口为 `/feed`，媒体格式为 `json`。来源身份字段是 `operator`、`trip`、`service_day`。这些字段表示来源自身声明，不等同于已经解决的业务实体身份。输入顺序是一次接收的观察顺序，并不保证业务修订有序。
 
 `/observations/1` 等地址允许逐条读取合成观察，返回 `items` 数组。正文、页内嵌入数据与CSV均保留供方原文，不在协议层推断当前有效值。网页中的 `source-records` 是门户向下载客户端提供的公开数据块；表单还带有隐藏控件，令牌用于本地协议状态检查。
 
@@ -18,6 +18,8 @@
 
 ## 领域样例
 
-- `fold_and_gap`：回拨重复时刻及春季缺失时刻；业务侧关注不静默猜测唯一瞬间。
-- `calendar_pair`：时刻表与停开日异步更新；业务侧关注仅发布相容组合。
-- `dispatch_recheck`：旧版本已派班后日历更正；业务侧关注列出受影响派班而不代为取消。
+- `name`：situation；业务侧关注observable。
+- `name`：situation；业务侧关注observable。
+- `name`：situation；业务侧关注observable。
+
+另外提供 `/rate-limited`、`/unstable`、`/range`、`/range-ignored`、`/truncated`、`/observations/1`、`/observations/2`、`/observations/3`。响应内容和版本由场景文件逐项声明，便于核对实际收到的来源资料。

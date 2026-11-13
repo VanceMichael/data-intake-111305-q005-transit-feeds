@@ -1,17 +1,17 @@
 [
   {
-    "name": "fold_and_gap",
-    "situation": "回拨重复时刻及春季缺失时刻",
-    "observable": "不静默猜测唯一瞬间"
+    "name": "name",
+    "situation": "situation",
+    "observable": "observable"
   },
   {
-    "name": "calendar_pair",
-    "situation": "时刻表与停开日异步更新",
-    "observable": "仅发布相容组合"
+    "name": "name",
+    "situation": "situation",
+    "observable": "observable"
   },
   {
-    "name": "dispatch_recheck",
-    "situation": "旧版本已派班后日历更正",
-    "observable": "列出受影响派班而不代为取消"
+    "name": "name",
+    "situation": "situation",
+    "observable": "observable"
   }
 ]
