@@ -1,0 +1,121 @@
+{
+  "identity_fields": [
+    "operator",
+    "trip",
+    "service_day"
+  ],
+  "scenario_note": "冬季时刻表切换演练：时刻表与例外日历分两次到达，覆盖跨日时刻、夏令时回拨歧义与前跳空档。",
+  "source_records": [
+    {
+      "part": "timetable",
+      "operator": "border-west",
+      "calendar_version": "winter-2026",
+      "trips": [
+        {
+          "operator": "border-west",
+          "trip": "N12",
+          "service_day": "2026-10-31",
+          "departure": "26:30",
+          "zone": "Europe/Berlin",
+          "calendar_version": "winter-2026"
+        },
+        {
+          "operator": "border-west",
+          "trip": "N13",
+          "service_day": "2026-10-25",
+          "departure": "02:30",
+          "zone": "Europe/Berlin",
+          "calendar_version": "winter-2026"
+        },
+        {
+          "operator": "border-west",
+          "trip": "N14",
+          "service_day": "2027-03-28",
+          "departure": "02:30",
+          "zone": "Europe/Berlin",
+          "calendar_version": "winter-2026"
+        }
+      ]
+    }
+  ],
+  "calendar_records": [
+    {
+      "part": "calendar",
+      "operator": "border-west",
+      "calendar_version": "winter-2026",
+      "exceptions": [
+        {
+          "trip": "N12",
+          "service_day": "2026-12-24",
+          "action": "cancel"
+        }
+      ]
+    }
+  ],
+  "portal": {
+    "csrf": "form-2026-b"
+  },
+  "routes": {
+    "/feed": {
+      "json": {
+        "items": [
+          {
+            "part": "timetable",
+            "operator": "border-west",
+            "calendar_version": "winter-2026",
+            "trips": [
+              {
+                "operator": "border-west",
+                "trip": "N12",
+                "service_day": "2026-10-31",
+                "departure": "26:30",
+                "zone": "Europe/Berlin",
+                "calendar_version": "winter-2026"
+              },
+              {
+                "operator": "border-west",
+                "trip": "N13",
+                "service_day": "2026-10-25",
+                "departure": "02:30",
+                "zone": "Europe/Berlin",
+                "calendar_version": "winter-2026"
+              },
+              {
+                "operator": "border-west",
+                "trip": "N14",
+                "service_day": "2027-03-28",
+                "departure": "02:30",
+                "zone": "Europe/Berlin",
+                "calendar_version": "winter-2026"
+              }
+            ]
+          }
+        ]
+      },
+      "headers": {
+        "ETag": "feed-winter-2026"
+      }
+    },
+    "/calendar": {
+      "json": {
+        "items": [
+          {
+            "part": "calendar",
+            "operator": "border-west",
+            "calendar_version": "winter-2026",
+            "exceptions": [
+              {
+                "trip": "N12",
+                "service_day": "2026-12-24",
+                "action": "cancel"
+              }
+            ]
+          }
+        ]
+      },
+      "headers": {
+        "ETag": "calendar-winter-2026"
+      }
+    }
+  }
+}

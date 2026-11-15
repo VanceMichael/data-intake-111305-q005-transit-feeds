@@ -18,8 +18,13 @@
 
 ## 领域样例
 
-- `name`：situation；业务侧关注observable。
-- `name`：situation；业务侧关注observable。
-- `name`：situation；业务侧关注observable。
+合成场景 `fixtures/winter_switch.json` 演示冬季时刻表切换，时刻表与例外日历分两个路由（`/feed`、`/calendar`）两次到达：
+
+- 跨日时刻：N12 在服务日 2026-10-31 的 `26:30`，墙钟落到次日 02:30，解释为唯一 UTC；业务侧可核对来源写法被逐字保留。
+- 回拨歧义：N13 在 2026-10-25 的 `02:30` 落在 Europe/Berlin 夏令时回拨区间，同一当地时间对应两个 UTC，业务侧应看到两个候选与歧义复核。
+- 前跳空档：N14 在 2027-03-28 的 `02:30` 是不存在的当地时间，业务侧应看到 `nonexistent` 状态与空档边界而非系统默认值。
+- 分版到达：仅抓取 `/feed` 时无有效业务版本；`/calendar` 到达后才按相同 `operator` 与 `calendar_version` 装配为一组相容 bundle。
+
+来源身份字段 `operator`、`trip`、`service_day` 仍是供方自述，不等同于已解决的业务实体；服务日解释规则见 `docs/service-day.md`。
 
 另外提供 `/rate-limited`、`/unstable`、`/range`、`/range-ignored`、`/truncated`、`/observations/1`、`/observations/2`、`/observations/3`。响应内容和版本由场景文件逐项声明，便于核对实际收到的来源资料。

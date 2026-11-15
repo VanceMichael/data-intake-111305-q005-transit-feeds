@@ -1,3 +1,9 @@
+"""来源观测的身份规范化（遗留基础层）。
+
+本模块只校验来源自述身份并保留原始 value，不做任何服务日或时区解释。
+服务日/夏令时/跨日时刻的解释在 :mod:`transit_feeds.serviceday`，
+相容版本装配在 :mod:`transit_feeds.catalog`，不要用本模块替代它们。
+"""
 from dataclasses import dataclass
 from typing import Any
 

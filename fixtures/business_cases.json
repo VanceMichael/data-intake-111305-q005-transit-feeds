@@ -1,17 +1,32 @@
 [
   {
-    "name": "name",
-    "situation": "situation",
-    "observable": "observable"
+    "name": "跨日时刻归属服务日",
+    "situation": "供方按运营日而非自然日结算，夜间班车给出 26:30 这样的时刻，字面时间落在次日凌晨；旧抓取无法说明它属于哪一天。",
+    "observable": "解释结果逐字保留 source_departure=26:30，wall_local_iso 落到服务日次日 02:30，crosses_midnight=true，并给出唯一确定的 UTC 候选与所用 zone_rule（时区名+tzdata 版本）。"
   },
   {
-    "name": "name",
-    "situation": "situation",
-    "observable": "observable"
+    "name": "夏令时回拨的重复当地时间",
+    "situation": "Europe/Berlin 在 2026-10-25 回拨，02:30 出现两次；旧逻辑把重复的当地时间当成同一班车。",
+    "observable": "状态标记为 ambiguous，保留 fold=0/fold=1 两个不同 UTC 候选（00:30Z 与 01:30Z），派班后自动进入复核队列，调度确认前不任选一个默认值。"
   },
   {
-    "name": "name",
-    "situation": "situation",
-    "observable": "observable"
+    "name": "夏令时前跳的不存在时间",
+    "situation": "供方在 2027-03-28 给出 02:30，而时钟从 02:00 直接跳到 03:00，该当地时间不存在。",
+    "observable": "状态标记为 nonexistent，candidates 为空，给出空档两侧 UTC 边界 gap_bracket 作为依据，禁止以系统默认时间顶替；派班进入 unresolvable 复核。"
+  },
+  {
+    "name": "时刻表与例外日历分两次到达",
+    "situation": "线路时刻表与停开/增补例外由供方分两次推送，单到一半时业务不应看到混搭的相容版本。",
+    "observable": "先到的部件保持 pending（无有效 bundle）；同 operator 与 calendar_version 的两个部件齐备后才装配并提升为唯一有效版本，不同 calendar_version 绝不混搭。"
+  },
+  {
+    "name": "冬季换表后的已派班次复核",
+    "situation": "线路切换冬季时刻表后，部分已派班次的时刻、运营状态或时区解释发生变化。",
+    "observable": "升级时逐班比较新旧 bundle，仅对受影响且已派班的班次生成 calendar_change 复核；系统不自动取消派班，调度可从派班记录追溯当时来源时刻、解释快照与全部历史版本。"
+  },
+  {
+    "name": "补抓与跨版本解释缓存",
+    "situation": "供方接口支持 ETag/304，网络失败后需要补抓；同一时刻解释在多个时刻表版本中重复出现。",
+    "observable": "304 不产生新正文；重复摄入 parts_new=0、bundles_assembled=0；interpretations 以依据哈希为主键跨版本命中，依据中的 tzdata 版本变化会使缓存键失效；运行状态写入 ingestion_runs，失败标记 failed 且不残留半成品 bundle。"
   }
 ]
