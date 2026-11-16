@@ -22,4 +22,9 @@
 - `name`：situation；业务侧关注observable。
 - `name`：situation；业务侧关注observable。
 
+时刻表与运营日历文档分别由 `/timetable`、`/calendar` 提供，格式与业务解释规则见
+`service-day.md`。`/timetable-next` 是冬季切换后的时刻表，`/calendar` 的第二次请求
+会返回更新后的日历；`/calendar-busy` 始终返回 429，`/calendar-malformed` 返回
+无法通过校验的日历，用于演练失败与恢复。
+
 另外提供 `/rate-limited`、`/unstable`、`/range`、`/range-ignored`、`/truncated`、`/observations/1`、`/observations/2`、`/observations/3`。响应内容和版本由场景文件逐项声明，便于核对实际收到的来源资料。

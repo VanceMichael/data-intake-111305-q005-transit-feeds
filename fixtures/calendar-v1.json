@@ -1,0 +1,30 @@
+{
+  "kind": "calendar",
+  "version": "calendar-2026-10",
+  "valid_from": "2026-10-01",
+  "valid_to": "2026-12-31",
+  "exceptions": [
+    {
+      "date": "2026-10-26",
+      "scope": {
+        "operator": "border-west",
+        "trip": "S7"
+      },
+      "reason": "engineering works"
+    }
+  ],
+  "operators": {
+    "border-west": {
+      "zone": "Europe/Berlin"
+    },
+    "channel": {
+      "zone": "Europe/London"
+    },
+    "south": {
+      "zone": "Australia/Sydney"
+    },
+    "east": {
+      "zone": "Asia/Shanghai"
+    }
+  }
+}

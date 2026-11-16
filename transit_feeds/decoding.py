@@ -56,3 +56,20 @@ def records(body, content_type):
     if not isinstance(result, list) or any(not isinstance(item, dict) for item in result):
         raise ValueError("source records must be objects")
     return result
+
+
+def document(body, content_type):
+    """Decode a timetable or calendar document without interpreting it."""
+    media_type = content_type.partition(";")[0].strip().lower()
+    if media_type == "application/json":
+        payload = json.loads(body)
+    elif media_type == "text/html":
+        page = parse_page(body)
+        if not page.record_text:
+            raise ValueError("source records block missing")
+        payload = json.loads("".join(page.record_text))
+    else:
+        raise ValueError("unsupported source content type: " + media_type)
+    if not isinstance(payload, dict):
+        raise ValueError("source document must be an object")
+    return payload

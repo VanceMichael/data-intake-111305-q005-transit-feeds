@@ -1,6 +1,12 @@
 # 跨时区班次源的服务日校准
 
-这是资料接收程序的基础版。它请求来源接口，保留响应状态、头部、原始内容与每次观察的时间，能够从 JSON、CSV 或门户嵌入的数据块读回来源记录。当前不生成面向业务的有效版本，也不自动执行门户提交；重复观察会分别保留，原始内容按摘要复用。
+这是资料接收程序。它请求来源接口，保留响应状态、头部、原始内容与每次观察的时间，
+能够从 JSON、CSV 或门户嵌入的数据块读回来源记录。在原始采集之上，它把线路时刻表
+与运营日历配成一组相容版本，按服务日解释时刻，并从派班记录保留可回查的依据。
+当前不自动执行门户提交；重复观察会分别保留，原始内容按摘要复用。
+
+服务日解释、版本配对、复核队列与回查口径见 `docs/service-day.md`；来源协议见
+`docs/source-protocol.md`。
 
 ## 运行环境
 
@@ -35,9 +41,29 @@ python3 -m transit_feeds capture --base-url http://127.0.0.1:实际端口 --arch
 
 归档库只追加来源观察，不用最后一条响应覆盖先前响应。`archive.py` 管理原始内容及完整性，`client.py` 执行一次请求，`decoding.py` 负责来源格式解码，`origin.py` 提供协议演练。业务解释可与原始接收独立演进。
 
+## 时刻表接入、版本与复核
+
+```sh
+python3 -m transit_feeds sync --base-url http://127.0.0.1:实际端口 --runtime .runtime
+python3 -m transit_feeds assign --runtime .runtime --id SHIFT-D30 --operator border-west --trip D30 --stop central --service-day 2026-10-31
+python3 -m transit_feeds review --runtime .runtime
+python3 -m transit_feeds trace --runtime .runtime --id SHIFT-D30
+python3 -m transit_feeds acknowledge --runtime .runtime --item 1
+python3 -m transit_feeds pending --runtime .runtime
+```
+
+`sync` 分两次抓取 `/timetable` 与 `/calendar`，两半相容才发布一组业务可见版本；
+只到一半时上一版本继续生效，失败按 `Retry-After` 重试并保留状态。`assign` 把派班
+记录绑定到当前版本并留下解释快照；`review` 列出日历/时刻表更新后受影响的班次和
+仍有时间歧义的班次，`acknowledge` 只标记复核项已处理，不取消或改写派班；
+`trace` 从派班记录回查来源时刻、时区规则与候选时刻。
+
 ## 开发资料
 
-来源协议见 `docs/source-protocol.md`，领域观察关系见 `tests/test_source_contract.py`。`fixtures/business_cases.json` 保存业务侧关注的交错情况及可观察口径；基础版测试验证的是原始采集和协议，不代表业务处理已经具备这些能力。所有条目、机构、文件内容和门户回执均为本地合成资料，不包含真实用户身份。
+来源协议见 `docs/source-protocol.md`，服务日规则见 `docs/service-day.md`。领域观察
+关系见 `tests/test_source_contract.py`，业务交错情况见 `fixtures/business_cases.json`。
+测试验证原始采集、服务日解释、版本配对、复核队列与失败恢复。所有条目、机构、
+文件内容和门户回执均为本地合成资料，不包含真实用户身份。
 
 ## Wheel 分发
 

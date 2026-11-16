@@ -1,0 +1,65 @@
+{
+  "kind": "timetable",
+  "version": "2026-winter-2",
+  "calendar_version": "calendar-2026-11",
+  "valid_from": "2026-10-01",
+  "valid_to": "2026-12-31",
+  "operators": {
+    "border-west": {
+      "zone": "Europe/Berlin"
+    },
+    "channel": {
+      "zone": "Europe/London"
+    },
+    "south": {
+      "zone": "Australia/Sydney"
+    },
+    "east": {
+      "zone": "Asia/Shanghai"
+    }
+  },
+  "departures": [
+    {
+      "operator": "border-west",
+      "trip": "N12",
+      "stop": "central",
+      "service_day": "2026-10-31",
+      "departure": "27:05"
+    },
+    {
+      "operator": "border-west",
+      "trip": "N13",
+      "stop": "central",
+      "service_day": "2026-10-25",
+      "departure": "02:30"
+    },
+    {
+      "operator": "border-west",
+      "trip": "D30",
+      "stop": "central",
+      "service_day": "2026-10-31",
+      "departure": "03:15"
+    },
+    {
+      "operator": "channel",
+      "trip": "C1",
+      "stop": "terminal",
+      "service_day": "2026-10-25",
+      "departure": "01:30"
+    },
+    {
+      "operator": "south",
+      "trip": "S9",
+      "stop": "quay",
+      "service_day": "2026-10-04",
+      "departure": "02:30"
+    },
+    {
+      "operator": "east",
+      "trip": "E8",
+      "stop": "border",
+      "service_day": "2026-11-01",
+      "departure": "00:10"
+    }
+  ]
+}

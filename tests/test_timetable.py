@@ -8,7 +8,7 @@ class RecordTests(unittest.TestCase):
         self.assertEqual(result["key"], "item-1")
         self.assertEqual(result["revision"], 2)
         self.assertEqual(result["value"], {"name": "sample"})
-        self.assertEqual(result["event"], "service_day")
+        self.assertNotIn("event", result)
 
     def test_rejects_missing_identity(self):
         with self.assertRaisesRegex(ValueError, "missing fields"):

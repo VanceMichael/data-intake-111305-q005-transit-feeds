@@ -1,17 +1,69 @@
 [
   {
-    "name": "name",
-    "situation": "situation",
-    "observable": "observable"
+    "name": "extended-hour-service-day",
+    "situation": "供方写 26:30，属 2026-10-31 服务日，实为 2026-11-01 当地 02:30",
+    "observable": {
+      "source_time": "26:30",
+      "service_day": "2026-10-31",
+      "zone": "Europe/Berlin",
+      "status": "unique",
+      "utc": "2026-11-01T01:30:00+00:00"
+    }
   },
   {
-    "name": "name",
-    "situation": "situation",
-    "observable": "observable"
+    "name": "repeated-local-time",
+    "situation": "夏令时回拨使 2026-10-25 的 02:30 出现两次",
+    "observable": {
+      "source_time": "02:30",
+      "service_day": "2026-10-25",
+      "zone": "Europe/Berlin",
+      "status": "repeated",
+      "candidates": [
+        "2026-10-25T00:30:00+00:00",
+        "2026-10-25T01:30:00+00:00"
+      ],
+      "chosen": null
+    }
   },
   {
-    "name": "name",
-    "situation": "situation",
-    "observable": "observable"
+    "name": "nonexistent-local-time",
+    "situation": "夏令时前拨跳过 2026-10-04 的 02:30",
+    "observable": {
+      "source_time": "02:30",
+      "service_day": "2026-10-04",
+      "zone": "Australia/Sydney",
+      "status": "non_existent",
+      "candidates": []
+    }
+  },
+  {
+    "name": "halves-arrive-separately",
+    "situation": "日历后到达时时刻表 304 未变化",
+    "observable": {
+      "published_versions": 2,
+      "stale_half_reused": true,
+      "business_view": "one compatible version"
+    }
+  },
+  {
+    "name": "calendar-closes-bound-shift",
+    "situation": "新日历声明 2026-10-31 的 D30 停开，已派班次需复核",
+    "observable": {
+      "shift_preserved": true,
+      "review_reasons": [
+        "interpretation_changed",
+        "instants_changed",
+        "service_closed"
+      ],
+      "auto_cancelled": false
+    }
+  },
+  {
+    "name": "incompatible-pair-is-not-published",
+    "situation": "日历不覆盖时刻表服务日",
+    "observable": {
+      "publish_error": "coverage_gap",
+      "previous_version_retained": true
+    }
   }
 ]
